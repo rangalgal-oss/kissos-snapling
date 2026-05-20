@@ -802,9 +802,7 @@
 
         <div class="form-card">
           <h3>השאירו פרטים ונחזור אליכם</h3>
-          <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="contact" />
-            <p style="display:none"><label>אל תמלאו שדה זה: <input name="bot-field" /></label></p>
+          <form id="contactForm" onsubmit="sendWhatsApp(event)">
             <div class="frow">
               <div class="fgroup">
                 <label for="fname">שם</label>
@@ -818,7 +816,7 @@
                 <label for="fmsg">תיאור הבעיה (אופציונלי)</label>
                 <textarea id="fmsg" name="message" placeholder="למשל: נזילה מהגג, סדקים בקיר חוץ..."></textarea>
               </div>
-              <button type="submit" class="form-submit">📨 שלחו פנייה</button>
+              <button type="submit" class="form-submit">💬 שלחו פנייה בוואטסאפ</button>
             </div>
           </form>
         </div>
@@ -871,7 +869,18 @@
 
 
 <script>
-  document.getElementById('burger').addEventListener('click',()=>
+function sendWhatsApp(e) {
+  e.preventDefault();
+  const name = document.getElementById('fname').value.trim();
+  const phone = document.getElementById('fphone').value.trim();
+  const msg = document.getElementById('fmsg').value.trim();
+  let text = 'שלום, אני מעוניין בשירותי קיסוס סנפלינג.\n';
+  text += 'שם: ' + name + '\n';
+  text += 'טלפון: ' + phone;
+  if (msg) text += '\nתיאור: ' + msg;
+  window.open('https://wa.me/9720525518519?text=' + encodeURIComponent(text), '_blank');
+}
+document.getElementById('burger').addEventListener('click',()=>
     document.getElementById('navLinks').classList.toggle('open'));
 
   document.querySelectorAll('a[href^="#"]').forEach(a=>
